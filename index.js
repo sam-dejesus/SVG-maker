@@ -1,47 +1,8 @@
 const {Square, Circle, Triangle } = require('./lib/shapesClasses.js')
 const inquirer = require('inquirer');
 const fs = require('fs')
-
-class Svg {
-    constructor(){
-        this.textElement = ''
-        this.shapeElement = ''
-    }
-    draw(){
-        return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="300" height="200">${this.textElement}${this.shapeElement}</svg>`
-    }
-    
-       setTextElement(text,color){
-        this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${color}">${text}</text>`
-    }
-    setShapeElement(shape){
-        this.shapeElement = shape.draw()
-
-    }
-}
-
-//------
-const shapeClasses = {
-    Square: Square,
-    Circle: Circle,
-    Triangle: Triangle
-  };
-  
-  function shapes(data) {
-    const svg = new Svg();
-  
-    svg.setTextElement(data.text, data.textColor);
-  
-
-    const ShapeClass = shapeClasses[data.shape];
-    const shape = new ShapeClass(data.shapeColor);
-
-    svg.setShapeElement(shape);
-  
-    return svg.draw();
-  }
-  
-//------
+const svgClass = require('./lib/more/svgClass.js')
+const path = require('path')
 
 const questions = [
     {
@@ -69,6 +30,33 @@ const questions = [
     
 ]
 
+let chosenShape;
+
+function init(){
+    return inquirer.prompt(questions)
+    .then((answers) =>{
+        switch (answers.shape){
+            case "Circle":
+                chosenShape = new Circle()
+            break
+            case "Triangle":
+                chosenShape = new Triangle
+            break
+            case "Square":
+                chosenShape = new Square()
+            break
+        }
+
+
+     const svg = new svgClass.SVG()
+     svg.setText(answers.text, answers.textColor);
+     chosenShape.setcolor(answers.shapeColor);
+     svg.setShape(chosenShape);
+
+    const svgString = svg.draw();
+    return writeToFile("logo.svg", svgString)
+    })
+
 function writeToFile(filename, data) {
     fs.writeFile(filename, data, (err) => {
         if (err) throw err;
@@ -77,16 +65,13 @@ function writeToFile(filename, data) {
 }
 
 
-function init() {
-    inquirer.prompt(questions)
-        .then((data) => {
-            const shapeFile = shapes(data);
-            writeToFile('Logo.svg', shapeFile);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
 }
+
+
+
+
+
+
 
 init()
 
