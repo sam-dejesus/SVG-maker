@@ -1,6 +1,47 @@
-const shapes = require('./lib/shapes')
+const {Square, Circle, Triangle } = require('./lib/shapesClasses.js')
 const inquirer = require('inquirer');
 const fs = require('fs')
+
+class Svg {
+    constructor(){
+        this.textElement = ''
+        this.shapeElement = ''
+    }
+    draw(){
+        return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="300" height="200">${this.textElement}${this.shapeElement}</svg>`
+    }
+    
+       setTextElement(text,color){
+        this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${color}">${text}</text>`
+    }
+    setShapeElement(shape){
+        this.shapeElement = shape.draw()
+
+    }
+}
+
+//------
+const shapeClasses = {
+    Square: Square,
+    Circle: Circle,
+    Triangle: Triangle
+  };
+  
+  function shapes(data) {
+    const svg = new Svg();
+  
+    svg.setTextElement(data.text, data.textColor);
+  
+
+    const ShapeClass = shapeClasses[data.shape];
+    const shape = new ShapeClass(data.shapeColor);
+
+    svg.setShapeElement(shape);
+  
+    return svg.draw();
+  }
+  
+//------
 
 const questions = [
     {
