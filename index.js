@@ -1,9 +1,10 @@
+// importing shapeclasses.js, svgclass.js, and inquirer
 const {Square, Circle, Triangle } = require('./lib/shapesClasses.js')
 const inquirer = require('inquirer');
 const fs = require('fs')
 const svgClass = require('./lib/more/svgClass.js')
 const path = require('path')
-
+//questions that user will be asked
 const questions = [
     {
         type: 'input',
@@ -31,7 +32,8 @@ const questions = [
 ]
 
 let chosenShape;
-
+// will create a new svg file with the users imputs the switch method will filter the shape
+//the svg variable will hold the data like shape, color, text, textcolor
 function init(){
     return inquirer.prompt(questions)
     .then((answers) =>{
@@ -56,7 +58,7 @@ function init(){
     const svgString = svg.draw();
     return writeToFile("logo.svg", svgString)
     })
-
+// function will create the svg file
 function writeToFile(filename, data) {
     fs.writeFile(filename, data, (err) => {
         if (err) throw err;
