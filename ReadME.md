@@ -9,7 +9,7 @@ the reason for this application is if the user wants to create a new logo by ans
 -NodeJS to run the application
 
 ## Usage
-to use this program the user will install both Jest and Inquirer with npm i. after that the user will write node index to run the program. the user will start answering questions about the design of the logo. once the user is finished an svg file will be created named Logo.svg. the user can also run jest test to see if the application will work and view examples of other logs in the examples folder.
+to use this program the user will install both Jest and Inquirer with npm i. after that the user will write node index to run the program. the user will start answering questions about the design of the logo. once the user is finished an svg file will be created named Logo.svg. the user can also run jest test to see if the application will work and view examples of other logs in the examples folder. to view a video of the program working click here https://drive.google.com/file/d/15OI9fj4k6Pq_e8KOF5yQK2xj_M6-PEBZ/view?usp=sharing
 
 ## License
 please refer to the repo.
